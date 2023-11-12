@@ -1,0 +1,50 @@
+<div class="h-full w-full mt-4">
+    <h2 class="text-center">Orders</h2>
+
+    <div class="w-full mx-auto flex justify-content-end px-6">
+        <p-button label="Add Order" (click)="showAddModal()"></p-button>
+
+        <app-add-edit-order-modal [selectedOrder]="selectedOrder" [displayAddModal]="displayAddEditModal"
+            (clickClose)="hideAddModal($event)" (clickAdd)="refreshTable($event)"></app-add-edit-order-modal>
+    </div>
+
+    <div class="flex mx-auto h-full mt-2">
+        <app-admin-navbar></app-admin-navbar>
+
+        <p-card class="col">
+            <p-table [value]="orders" [tableStyle]="{ 'min-width': '400px' }" [paginator]="true" [rows]="10"
+                [lazy]="true" (onLazyLoad)="getOrders($any($event))" [totalRecords]="metadata.totalOrders"
+                [loading]="loading">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>User Id</th>
+                        <th>Transaction</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-order>
+                    <tr>
+                        <td>{{ order.userId }}</td>
+                        <td>{{ order.transactionId }}</td>
+                        <td>{{ order.totalPrice }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.createdAt }}</td>
+                        <td>{{ order.updatedAt }}</td>
+                        <td class="flex gap-2">
+                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success"
+                                (click)="showEditModal(order)"></button>
+
+                            <button pButton icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                (click)="deleteOrder(order)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </div>
+
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-tringle"></p-confirmDialog>
+</div>

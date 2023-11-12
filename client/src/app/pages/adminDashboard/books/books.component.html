@@ -1,0 +1,48 @@
+<div class="h-full w-full mt-4">
+    <h2 class="text-center">Books</h2>
+
+    <div class="w-full mx-auto flex justify-content-end px-6">
+        <p-button label="Add Book" (click)="showAddModal()"></p-button>
+
+        <app-add-edit-book-modal [selectedBook]="selectedBook" [displayAddModal]="displayAddEditModal"
+            (clickClose)="hideAddModal($event)" (clickAdd)="refreshTable($event)"></app-add-edit-book-modal>
+    </div>
+
+    <div class="flex">
+        <app-admin-navbar></app-admin-navbar>
+
+        <p-dataView class="w-full mt-2" [value]="books" layout="grid" [paginator]="true" [rows]="10" [lazy]="true"
+            (onLazyLoad)="getBooks($any($event))" [totalRecords]="metadata.totalBooks" [loading]="loading">
+            <ng-template pTemplate="header">
+                <div class="flex align-items-center justify-content-between">
+                    <div class="flex  align-items-center gap-4">
+                        <app-categories-filter (selectCategory)="onSelectCategory($event)"></app-categories-filter>
+
+                        <div>Search bar</div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template let-book pTemplate="gridItem">
+                <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
+                    <div class="p-4 border-1 surface-border surface-card border-round">
+                        <div class="flex flex-column align-items-center gap-3 py-5">
+                            <img class="w-9 h-9 shadow-2 border-round" [src]="book.imageUrl" [alt]="book.title" />
+                            <div class="text-2xl font-bold">{{ book.title }}</div>
+                        </div>
+
+                        <div class="flex align-items-center justify-content-center gap-8">
+                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success"
+                                (click)="showEditModal(book)"></button>
+
+                            <button pButton icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                (click)="deleteBook(book)"></button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataView>
+    </div>
+
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-tringle"></p-confirmDialog>
+</div>

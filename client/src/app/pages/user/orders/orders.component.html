@@ -1,0 +1,36 @@
+<div class="h-full w-full mt-4">
+    <h2 class="text-center">Orders</h2>
+
+    <div class="flex mx-auto h-full mt-2 p-2">
+        <p-card class="col">
+            <p-table [value]="orders" [tableStyle]="{ 'min-width': '400px' }" [paginator]="true" [rows]="10"
+                [lazy]="true" (onLazyLoad)="getOrders($any($event))" [totalRecords]="metadata.totalOrders"
+                [loading]="loading">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Transaction</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-order>
+                    <tr>
+                        <td>{{ order.transactionId }}</td>
+                        <td>{{ order.totalPrice | currency }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.createdAt }}</td>
+                        <td>{{ order.updatedAt }}</td>
+                        <td>
+                            <button pButton label="Details" (click)="goToDetails(order._id)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </div>
+
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-tringle"></p-confirmDialog>
+</div>

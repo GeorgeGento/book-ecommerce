@@ -1,0 +1,72 @@
+<section class="h-full w-10 mt-3 mx-auto">
+    <p-dataView class="mt-2" [value]="books" [layout]="layout" [paginator]="true" [rows]="5" [lazy]="true"
+        (onLazyLoad)="getBooks($any($event))" [totalRecords]="metadata.totalBooks" [loading]="loading">
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center justify-content-between">
+                <div class="flex  align-items-center gap-4">
+                    <app-categories-filter (selectCategory)="onSelectCategory($event)"></app-categories-filter>
+
+                    <div>Search bar</div>
+                </div>
+
+                <div>
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template let-product pTemplate="listItem">
+            <div class="col-12">
+                <div class="h-full flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+                    <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
+                        [src]="product.imageUrl" [alt]="product.title" />
+                    <div
+                        class="h-full flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                        <div class="h-full flex flex-column align-items-center sm:align-items-start gap-3">
+                            <div class="text-2xl font-bold text-900">{{ product.title }}</div>
+                            <div class="flex align-items-center gap-3">
+                                <span class="flex align-items-center gap-2">
+                                    <i class="pi pi-tag"></i>
+                                    <span class="font-semibold">{{ product.tags }}</span>
+                                </span>
+                            </div>
+
+                            <div class="text-xl">{{ product.description }}</div>
+                        </div>
+
+                        <div class="h-full flex flex-column align-items-center gap-7">
+                            <span class="text-2xl font-semibold">{{ product.price | currency }}</span>
+
+                            <button pButton icon="pi pi-shopping-cart" class="p-button-rounded"
+                                (click)="addToCart(product)"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template let-product pTemplate="gridItem">
+            <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
+                <div class="p-4 border-1 surface-border surface-card border-round">
+                    <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+                        <span class="flex align-items-center gap-2">
+                            <i class="pi pi-tag"></i>
+                            <span class="font-semibold">{{ product.tags }}</span>
+                        </span>
+                    </div>
+
+                    <div class="flex flex-column align-items-center gap-3 py-5">
+                        <img class="w-6 h-6 shadow-2 border-round" [src]="product.imageUrl" [alt]="product.title" />
+                        <div class="text-2xl font-bold">{{ product.title }}</div>
+                    </div>
+
+                    <div class="flex align-items-center justify-content-center gap-8">
+                        <span class="text-2xl font-semibold">{{ product.price | currency }}</span>
+                        <button pButton icon="pi pi-shopping-cart" class="p-button-rounded"
+                            (click)="addToCart(product)"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+</section>

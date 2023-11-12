@@ -1,0 +1,68 @@
+<p-dialog header="{{modalType}} Book" [(visible)]="displayAddModal" [modal]="true" [style]="{ width: '50vw' }"
+    [draggable]="false" [resizable]="false" (onHide)="closeModal()">
+    <form [formGroup]="orderForm" class="flex flex-column row-gap-2">
+        <div class="w-full flex flex-column md:flex-row md:align-items-center column-gap-2">
+            <div class="field flex flex-column">
+                <label for="status">Status</label>
+                <p-dropdown formControlName="status" class="w-6" [options]="statuses" placeholder="Select a status">
+                    <ng-template let-status pTemplate="item">
+                        <div>{{ status }}</div>
+                    </ng-template>
+                </p-dropdown>
+
+                <small *ngIf="status.invalid && (status.dirty || status.touched)" class="block p-error">
+                    <div *ngIf="status.errors?.['required']">Status is required</div>
+                </small>
+                <small *ngIf="status.dirty || status.touched" class="block p-error">
+                    <div *ngIf="orderForm.errors?.['emptyStatus']">Status is required</div>
+                </small>
+            </div>
+
+            <div class="field flex flex-column">
+                <label for="totalPrice">Price</label>
+                <input type="number" pInputText formControlName="totalPrice" name="totalPrice"
+                    placeholder="Total Price" />
+                <small *ngIf="totalPrice.invalid && (totalPrice.dirty || totalPrice.touched)" class="block p-error">
+                    <div *ngIf="totalPrice.errors?.['required']">Price is required</div>
+                </small>
+            </div>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="transactionId">Transaction Id</label>
+            <input type="text" pInputText formControlName="transactionId" name="transactionId"
+                placeholder="Transaction Id" />
+
+            <small *ngIf="transactionId.invalid && (transactionId.dirty || transactionId.touched)"
+                class="block p-error">
+                <div *ngIf="transactionId.errors?.['required']">TransactionId is required</div>
+            </small>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="userId">User Id</label>
+            <input type="text" pInputText formControlName="userId" name="userId" placeholder="UserId" />
+
+            <small *ngIf="userId.invalid && (userId.dirty || userId.touched)" class="block p-error">
+                <div *ngIf="userId.errors?.['required']">UserId is required</div>
+            </small>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="userEmail">User Email</label>
+            <input type="text" pInputText formControlName="userEmail" name="userEmail" placeholder="Type users email" />
+
+            <small *ngIf="userEmail.invalid && (userEmail.dirty || userEmail.touched)" class="block p-error">
+                <div *ngIf="userEmail.errors?.['required']">Email is required</div>
+                <div *ngIf="userEmail.errors?.['email']">Invalid email</div>
+            </small>
+        </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <p-button (click)="closeModal()" label="Cancel" styleClass="p-button-text"></p-button>
+
+        <p-button (click)="modalType === 'Add' ? addOrder() : editOrder()" label="{{modalType}}"
+            [disabled]="orderForm.invalid"></p-button>
+    </ng-template>
+</p-dialog>

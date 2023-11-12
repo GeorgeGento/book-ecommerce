@@ -1,0 +1,62 @@
+<div class="h-full w-full mt-4">
+    <h2 class="text-center">Order</h2>
+
+    <div class="h-full mt-2 p-2 flex justify-content-center">
+        <p-card class="w-9 border-round" styleClass="p-4">
+            <ng-template pTemplate="header">
+                <div class="w-full flex flex-column gap-2">
+                    <div class="w-full flex justify-content-between align-content-center">
+                        <span>ID: {{order?._id}}</span>
+                        <span>Status: {{order?.status}}</span>
+                    </div>
+    
+                    <div class="w-full flex align-content-center gap-4">
+                        <span>TransactionID: {{order?.transactionId}}</span>
+                        <span>Price: {{order?.totalPrice | currency}}</span>
+                    </div>
+
+                    <div class="w-full flex align-content-center gap-4">
+                        <span>UserId: {{order?.userId}}</span>
+                        <span>Email: {{order?.userEmail}}</span>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="body">
+                <p-dataView class="mt-2" [value]="order?.products" layout="grid" [paginator]="true" [rows]="5">
+                    <ng-template let-product pTemplate="gridItem">
+                        <div class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
+                            <div class="p-4 border-1 surface-border surface-card border-round">
+                                <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+                                    <span class="flex align-items-center gap-2">
+                                        <i class="pi pi-tag"></i>
+                                        <span class="font-semibold">{{ product.tags }}</span>
+                                    </span>
+                                </div>
+
+                                <div class="flex flex-column align-items-center gap-3 py-5">
+                                    <img class="w-6 h-6 shadow-2 border-round" [src]="product.imageUrl"
+                                        [alt]="product.title" />
+                                    <div class="text-2xl font-bold">{{ product.title }}</div>
+                                </div>
+
+                                <div class="flex align-items-center justify-content-center gap-8">
+                                    <span class="text-2xl font-semibold">{{ product.price | currency }}</span>
+                                    <button pButton icon="pi pi-shopping-cart" class="p-button-rounded"
+                                        (click)="addToCart(product)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dataView>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <div class="w-full flex justify-content-center align-content-center gap-4">
+                    <span>Created At: {{order?.createdAt}}</span>
+                    <span>Updated At: {{order?.updatedAt}}</span>
+                </div>
+            </ng-template>
+        </p-card>
+    </div>
+</div>

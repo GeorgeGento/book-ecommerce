@@ -1,0 +1,107 @@
+<p-dialog header="{{modalType}} Book" [(visible)]="displayAddModal" [modal]="true" [style]="{ width: '50vw' }"
+    [draggable]="false" [resizable]="false" (onHide)="closeModal()">
+    <form [formGroup]="bookForm" class="flex flex-column row-gap-2">
+        <div class="w-full flex flex-column align-items-center justify-content-center row-gap-2">
+            <h2>Book Image</h2>
+            <img *ngIf="hasImageUrl() && !showFileUpload" [src]="imageUrl.value" alt="book image"
+                (click)="openFileUpload()" class="h-6 w-6 border-round" />
+
+            <p-card *ngIf="showFileUpload" class="flex flex-column row-gap-2">
+                <div class="w-full flex flex-column row-gap-2">
+                    <div class="w-full flex justify-content-end">
+                        <p-button *ngIf="hasImageUrl() && showFileUpload" icon="pi pi-times" [rounded]="true"
+                            [text]="true" severity="danger" (click)="closeFileUpload()"></p-button>
+                    </div>
+
+                    <p-fileUpload class="mt-2" *ngIf="showFileUpload" name="image" [url]="imageUploadUrl"
+                        (onUpload)="onUpload($event)" accept="image/*" [maxFileSize]="10000000">
+                    </p-fileUpload>
+                </div>
+            </p-card>
+
+            <small *ngIf="!hasImageUrl()" class="block p-error">
+                <div *ngIf="!hasImageUrl()">Book Image is required</div>
+            </small>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="title">Title</label>
+            <input type="text" pInputText formControlName="title" name="title" placeholder="Book title" />
+
+            <small *ngIf="title.invalid && (title.dirty || title.touched)" class="block p-error">
+                <div *ngIf="title.errors?.['required']">Title is required</div>
+            </small>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="description">Description</label>
+            <textarea rows="10" cols="50" [style]="{'resize': 'none'}" pInputTextarea formControlName="description"
+                name="description" placeholder="Book description"></textarea>
+
+            <small *ngIf="description.invalid && (description.dirty || description.touched)" class="block p-error">
+                <div *ngIf="description.errors?.['required']">Description is required</div>
+            </small>
+        </div>
+
+        <div class="w-full flex flex-column md:flex-row md:align-items-center column-gap-2">
+            <div class="field flex flex-column">
+                <label for="tags">Category</label>
+                <p-dropdown *ngIf="loaded" formControlName="tags" class="w-6" [options]="categories"
+                    placeholder="Select a Category">
+                    <ng-template let-category pTemplate="item">
+                        <div>{{ category }}</div>
+                    </ng-template>
+                </p-dropdown>
+
+                <small *ngIf="tags.invalid && (tags.dirty || tags.touched)" class="block p-error">
+                    <div *ngIf="tags.errors?.['required']">Category is required</div>
+                </small>
+
+                <small *ngIf="tags.dirty || tags.touched" class="block p-error">
+                    <div *ngIf="bookForm.errors?.['emptyCategory']">Category is required</div>
+                </small>
+            </div>
+
+            <div class="field flex flex-column">
+                <label for="price">Price</label>
+                <input type="number" pInputText formControlName="price" name="price" placeholder="Price" />
+                <small *ngIf="price.invalid && (price.dirty || price.touched)" class="block p-error">
+                    <div *ngIf="price.errors?.['required']">Price is required</div>
+                </small>
+            </div>
+
+            <div class="field flex flex-column">
+                <label for="stock">Stock</label>
+                <input type="number" pInputText formControlName="stock" name="stock" placeholder="Stock" />
+                <small *ngIf="stock.invalid && (stock.dirty || stock.touched)" class="block p-error">
+                    <div *ngIf="stock.errors?.['required']">Stock is required</div>
+                </small>
+            </div>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="author">Author</label>
+            <input type="text" pInputText formControlName="author" name="author" placeholder="Book author" />
+
+            <small *ngIf="author.invalid && (author.dirty || author.touched)" class="block p-error">
+                <div *ngIf="author.errors?.['required']">Author is required</div>
+            </small>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="publisher">Publisher</label>
+            <input type="text" pInputText formControlName="publisher" name="publisher" placeholder="Book publisher" />
+
+            <small *ngIf="publisher.invalid && (publisher.dirty || publisher.touched)" class="block p-error">
+                <div *ngIf="publisher.errors?.['required']">Publisher is required</div>
+            </small>
+        </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <p-button (click)="closeModal()" label="Cancel" styleClass="p-button-text"></p-button>
+
+        <p-button (click)="modalType === 'Add' ? addBook() : editBook()" label="{{modalType}}"
+            [disabled]="bookForm.invalid"></p-button>
+    </ng-template>
+</p-dialog>
