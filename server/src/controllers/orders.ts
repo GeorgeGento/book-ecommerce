@@ -127,10 +127,6 @@ export const postOrder = async (
 	next: NextFunction
 ) => {
 	try {
-		const orderBody = req.body;
-		if (!isOrder(orderBody))
-			return res.status(400).json({ message: "All fields required." });
-
 		const {
 			_id,
 			userId,
@@ -140,7 +136,20 @@ export const postOrder = async (
 			transactionDetails,
 			status,
 			products,
-		} = orderBody;
+		} = req.body;
+		if (
+			!(
+				userId &&
+				userEmail &&
+				totalPrice &&
+				transactionId &&
+				transactionDetails &&
+				status &&
+				products
+			)
+		)
+			return res.status(400).json({ message: "All fields required." });
+
 		if (!products.length)
 			return res.status(409).json({
 				message: "Empty products list.",
@@ -152,7 +161,7 @@ export const postOrder = async (
 				message: "Order already exists.",
 			});
 
-		const productsId = products.map((p) => p._id);
+		const productsId = products.map((p: any) => p._id);
 		const books = await Book.find({ _id: { $in: productsId } }).lean();
 		if (productsId.length !== books.length)
 			return res.status(409).json({ message: "Invalid products detected." });
@@ -234,12 +243,13 @@ export const patchOrder = async (
 				message: `Order with id: ${orderId} not found.`,
 			});
 
-		existedOrder.userEmail = userEmail;
-		existedOrder.totalPrice = totalPrice;
-		existedOrder.transactionDetails = transactionDetails;
-		existedOrder.transactionId = transactionId;
-		existedOrder.status = status;
-		existedOrder.products = products;
+		if (userEmail) existedOrder.userEmail = userEmail;
+		if (totalPrice) existedOrder.totalPrice = totalPrice;
+		if (transactionDetails)
+			existedOrder.transactionDetails = transactionDetails;
+		if (transactionId) existedOrder.transactionId = transactionId;
+		if (status) existedOrder.status = status;
+		if (products) existedOrder.products = products;
 		existedOrder.updatedAt = new Date();
 		await existedOrder.save();
 
@@ -282,13 +292,5 @@ export const deleteOrder = async (
 };
 
 const isOrder = (value: OrderType): value is OrderType => {
-	return (
-		"userId" in value &&
-		"userEmail" in value &&
-		"totalPrice" in value &&
-		"products" in value &&
-		"transactionDetails" in value &&
-		"status" in value &&
-		"transactionId" in value
-	);
+	return "_id" in value;
 };

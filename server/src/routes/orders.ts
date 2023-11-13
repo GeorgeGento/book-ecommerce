@@ -17,7 +17,7 @@ OrderRoutes.get("/users/:userId", isAdminOrOwner, getUserOrders);
 OrderRoutes.get("/:orderId", isAdminOrOwner, getOrder);
 
 OrderRoutes.post("/", isAdminOrOwner, postOrder);
-OrderRoutes.patch("/:orderId", isAdminOrOwner, patchOrder);
+OrderRoutes.patch("/:orderId", isAdmin, patchOrder);
 OrderRoutes.delete("/:orderId", isAdmin, deleteOrder);
 
 export default OrderRoutes;

@@ -1,10 +1,10 @@
 <p-dialog header="{{modalType}} Book" [(visible)]="displayAddModal" [modal]="true" [style]="{ width: '50vw' }"
-    [draggable]="false" [resizable]="false" (onHide)="closeModal()">
+    [draggable]="false" [resizable]="false" (onHide)="closeModal()" styleClass="w-10 md:w-7">
     <form [formGroup]="orderForm" class="flex flex-column row-gap-2">
         <div class="w-full flex flex-column md:flex-row md:align-items-center column-gap-2">
             <div class="field flex flex-column">
                 <label for="status">Status</label>
-                <p-dropdown formControlName="status" class="w-6" [options]="statuses" placeholder="Select a status">
+                <p-dropdown formControlName="status" class="w-6" [options]="statuses" placeholder="Select a status" [showClear]="true">
                     <ng-template let-status pTemplate="item">
                         <div>{{ status }}</div>
                     </ng-template>

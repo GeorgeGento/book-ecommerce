@@ -35,20 +35,41 @@ export class NavbarComponent implements OnInit, OnDestroy {
         {
           label: 'Profile',
           icon: 'pi pi-fw pi-user',
-          command: () => this.router.navigate([`/users/${this.user?._id}/profile`]),
+          command: () =>
+            this.router.navigate([`/users/${this.user?._id}/profile`]),
         },
         {
           label: 'Orders',
           icon: 'pi pi-fw pi-list',
-          command: () => this.router.navigate([`/users/${this.user?._id}/orders`]),
+          command: () =>
+            this.router.navigate([`/users/${this.user?._id}/orders`]),
         },
       ];
-      this.user?.admin &&
+
+      if (this.user?.admin) {
         this.items.push({
           label: 'Dashboard',
           icon: 'pi pi-fw pi-server',
-          command: () => this.router.navigate(['/admin/dashboard/users']),
+          items: [
+            {
+              label: 'Users',
+              icon: 'pi pi-fw pi-users',
+              command: () => this.router.navigate(['/admin/dashboard/users']),
+            },
+            {
+              label: 'Books',
+              icon: 'pi pi-fw pi-book',
+              command: () => this.router.navigate(['/admin/dashboard/books']),
+            },
+            {
+              label: 'Orders',
+              icon: 'pi pi-fw pi-list',
+              command: () => this.router.navigate(['/admin/dashboard/orders']),
+            },
+          ],
         });
+      }
+
       this.items.push(
         { separator: true },
         {

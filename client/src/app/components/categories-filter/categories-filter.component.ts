@@ -20,7 +20,7 @@ export class CategoriesFilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookService.getCategories().subscribe({
-      next: (res) => (this.categories = ['Select Category', ...res]),
+      next: (res) => (this.categories = res),
     });
   }
 

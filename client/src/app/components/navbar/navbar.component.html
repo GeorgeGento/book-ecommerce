@@ -1,18 +1,20 @@
-<p-toolbar *ngIf="showNavbar" class="w-screen border-bottom-1">
-    <div class="p-toolbar-group-start">
-        <a routerLink="home" class="font-bold text-2xl">Bookstore</a>
-    </div>
-
-    <div class="p-toolbar-group-end flex column-gap-4">
-        <app-theme-toggle-button></app-theme-toggle-button>
-        <i class="pi pi-shopping-cart hover:cursor-pointer" pBadge [value]="itemsQuantity.toString()"
-            style="font-size: 24px" (click)="showDialog()"></i>
-
-        <div class="card flex justify-content-center" *ngIf="isLoggedIn">
-            <i class="pi pi-bars" style="font-size: 24px" (click)="menu.toggle($event)"></i>
-            <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
+<p-toolbar *ngIf="showNavbar" styleClass="w-full border-bottom-1 px-4">
+    <div class="w-full flex align-items-center justify-content-between">
+        <div>
+            <a routerLink="home" class="font-bold text-2xl">Bookstore</a>
         </div>
-
-        <p-button label="Login" *ngIf="!isLoggedIn" routerLink="/login"></p-button>
+    
+        <div class="flex align-items-center justify-content-center gap-4">
+            <app-theme-toggle-button></app-theme-toggle-button>
+            <i class="pi pi-shopping-cart hover:cursor-pointer" pBadge [value]="itemsQuantity.toString()"
+                style="font-size: 24px" (click)="showDialog()"></i>
+    
+            <div class="card flex align-items-center justify-content-center" *ngIf="isLoggedIn">
+                <i class="pi pi-bars" style="font-size: 24px" (click)="menu.toggle($event)"></i>
+                <p-tieredMenu id="navbar-menu" #menu [model]="items" [popup]="true"></p-tieredMenu>
+            </div>
+    
+            <p-button label="Login" *ngIf="!isLoggedIn" routerLink="/login"></p-button>
+        </div>
     </div>
 </p-toolbar>

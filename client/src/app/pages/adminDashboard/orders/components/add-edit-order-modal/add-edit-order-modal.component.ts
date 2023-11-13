@@ -16,7 +16,6 @@ export class AddEditOrderModalComponent {
   @Output() clickAdd: EventEmitter<any> = new EventEmitter<any>();
 
   statuses: string[] = [
-    'Select Status',
     'PENDING',
     'CREATED',
     'CONFIRMED',

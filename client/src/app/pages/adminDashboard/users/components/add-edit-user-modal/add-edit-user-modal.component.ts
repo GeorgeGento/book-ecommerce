@@ -34,8 +34,8 @@ export class AddEditUserModalComponent implements OnChanges {
         [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)],
       ],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      password: [''],
+      confirmPassword: [''],
       age: [0, Validators.required],
       phoneNumber: [
         '',

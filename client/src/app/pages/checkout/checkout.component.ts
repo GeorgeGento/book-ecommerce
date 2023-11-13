@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { loadScript } from '@paypal/paypal-js';
 import { MessageService } from 'primeng/api';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { Cart, CartItem } from 'src/app/types/cart';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -23,6 +25,8 @@ export class CheckoutComponent {
         this.cart = _cart;
       },
     });
+
+    loadScript({ clientId: environment.paypalClientId });
   }
 
   getTotal(items: CartItem[]) {

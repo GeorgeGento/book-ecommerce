@@ -22,7 +22,7 @@ export class BookService {
   ): Observable<BooksWithPagination> {
     return this.httpClient.get<BooksWithPagination>(
       `${this.baseUrl}/books${
-        category ? `/category/${category}` : ''
+        category ? `/categories/${category}` : ''
       }?skip=${skip}&limit=${limit}`
     );
   }
@@ -32,7 +32,9 @@ export class BookService {
   }
 
   getCategories(): Observable<string[]> {
-    return this.httpClient.get<string[]>(`${this.baseUrl}/books/category/list`);
+    return this.httpClient.get<string[]>(
+      `${this.baseUrl}/books/categories/list`
+    );
   }
 
   addBook(newBook: Book): Observable<Book> {

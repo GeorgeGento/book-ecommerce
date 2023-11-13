@@ -1,21 +1,21 @@
-<div class="h-full w-full mt-4">
+<div class="h-full w-full mt-6 flex flex-column align-content-center justify-content-center">
     <h2 class="text-center">Order</h2>
 
-    <div class="h-full mt-2 p-2 flex justify-content-center">
+    <div class="h-full mt-2 flex justify-content-center">
         <p-card class="w-9 border-round" styleClass="p-4">
             <ng-template pTemplate="header">
                 <div class="w-full flex flex-column gap-2">
-                    <div class="w-full flex justify-content-between align-content-center">
+                    <div class="w-full flex flex-column md:flex-row justify-content-between align-content-center">
                         <span>ID: {{order?._id}}</span>
                         <span>Status: {{order?.status}}</span>
                     </div>
     
-                    <div class="w-full flex align-content-center gap-4">
+                    <div class="w-full flex flex-column md:flex-row align-content-center gap-4">
                         <span>TransactionID: {{order?.transactionId}}</span>
                         <span>Price: {{order?.totalPrice | currency}}</span>
                     </div>
 
-                    <div class="w-full flex align-content-center gap-4">
+                    <div class="w-full flex flex-column md:flex-row align-content-center gap-4">
                         <span>UserId: {{order?.userId}}</span>
                         <span>Email: {{order?.userEmail}}</span>
                     </div>
@@ -52,7 +52,7 @@
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <div class="w-full flex justify-content-center align-content-center gap-4">
+                <div class="w-full flex flex-column md:flex-row justify-content-center align-content-center gap-4">
                     <span>Created At: {{order?.createdAt}}</span>
                     <span>Updated At: {{order?.updatedAt}}</span>
                 </div>

@@ -12,6 +12,7 @@ a {
   text-decoration: none;
 }
 
-george {
-display: flex;
+#navbar-menu .p-submenu-list {
+  right: 100%;
+  left: unset;
 }

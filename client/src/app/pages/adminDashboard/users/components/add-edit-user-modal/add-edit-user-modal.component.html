@@ -1,5 +1,5 @@
-<p-dialog header="{{modalType}} User" [(visible)]="displayAddModal" [modal]="true" [style]="{ width: '50vw' }"
-    [draggable]="false" [resizable]="false" (onHide)="closeModal()">
+<p-dialog header="{{modalType}} User" [(visible)]="displayAddModal" [modal]="true" [draggable]="false"
+    [resizable]="false" (onHide)="closeModal()" styleClass="w-10 md:w-7">
     <form [formGroup]="userForm">
         <div class="flex flex-column md:flex-row md:align-items-center column-gap-2">
             <div class="field flex flex-column">

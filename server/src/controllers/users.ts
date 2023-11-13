@@ -136,7 +136,7 @@ export const postUser = async (
 			}
 		);
 
-		return res.status(201).json({ ...user, accessToken: token });
+		return res.status(201).json({ user, accessToken: token });
 	} catch (err) {
 		req.app.locals.winston.error(err);
 
@@ -186,7 +186,23 @@ export const patchUser = async (
 		user.updatedAt = new Date();
 		await user.save();
 
-		return res.status(201).json(user);
+		return res
+			.status(201)
+			.json(
+				_.pick(
+					user,
+					"_id",
+					"firstName",
+					"lastName",
+					"email",
+					"verifiedEmail",
+					"phoneNumber",
+					"age",
+					"admin",
+					"createdAt",
+					"updatedAt"
+				)
+			);
 	} catch (err) {
 		req.app.locals.winston.error(err);
 

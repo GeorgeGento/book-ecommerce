@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "@paypal/paypal-js": "^7.0.3",
     "axios": "^1.6.0",
     "ngx-cookie-service": "^16.0.2",
     "primeflex": "^3.3.1",

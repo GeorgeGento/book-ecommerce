@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ConfirmEventType,
   ConfirmationService,
@@ -25,7 +26,8 @@ export class OrdersComponent {
   constructor(
     private orderService: OrderService,
     private confirmService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   getOrders($event?: LazyLoadEvent) {
@@ -83,5 +85,9 @@ export class OrdersComponent {
       },
       reject: (type: ConfirmEventType) => {},
     });
+  }
+
+  goToDetails(userId: string, id: string) {
+    this.router.navigate([`users/${userId}/orders/${id}`]);
   }
 }
