@@ -44,7 +44,14 @@ export class PaypalButtonsComponent implements OnInit, OnDestroy {
         createOrder: (data: any, actions: any) => {
           return this.paymentService
             .createOrder(this.cartItems)
-            .then((res) => res.id);
+            .then((res) => res.id)
+            .catch((err) =>
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Failed to create order',
+                detail: `${err.response.data.message}`,
+              })
+            );
         },
         onApprove: (data: any, actions: any) => {
           this.paymentService.onApprove(data, actions).then((res: any) => {

@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CartDialogListComponent } from '../../components/cart-dialog-list/cart-dialog-list.component';
 import { PaypalButtonsComponent } from 'src/app/components/paypal-buttons/paypal-buttons.component';
+import { BookService } from '../book/book.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,8 @@ export class CartService {
   constructor(
     private messageService: MessageService,
     private cookieService: CookieService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private bookService: BookService
   ) {
     const cookieCart = this.getCartFromCookie();
     if (cookieCart) {
@@ -80,18 +82,29 @@ export class CartService {
   }
 
   addToCart(item: CartItem): void {
-    const items = [...this.cart.value.items];
-    const itemInCart = items.find((_item) => _item._id === item._id);
+    this.bookService.getBook(item._id).subscribe((res) => {
+      const items = [...this.cart.value.items];
+      const itemInCart = items.find((_item) => _item._id === item._id);
+      if (
+        (itemInCart && res.stock < itemInCart.quantity + 1) ||
+        res.stock < item.quantity
+      )
+        return this.messageService.add({
+          severity: 'error',
+          summary: 'Out Of Stock',
+          detail: `${item.title} is out of stock.`,
+        });
 
-    if (itemInCart) itemInCart.quantity += 1;
-    else items.push(item);
+      if (itemInCart) itemInCart.quantity += 1;
+      else items.push(item);
 
-    this.cart.next({ items });
-    this.saveCartToCookie();
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: `${item.title} added to cart.`,
+      this.cart.next({ items });
+      this.saveCartToCookie();
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: `${item.title} added to cart.`,
+      });
     });
   }
 
