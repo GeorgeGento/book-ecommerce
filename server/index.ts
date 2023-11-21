@@ -61,3 +61,7 @@ app.use("/", Routes);
 app.listen(process.env.PORT!, () => {
 	console.log(`Listening on port ${process.env.PORT!}`);
 });
+
+process
+	.on("uncaughtException", (err) => console.error(err))
+	.on("unhandledRejection", (err) => console.error(err));
