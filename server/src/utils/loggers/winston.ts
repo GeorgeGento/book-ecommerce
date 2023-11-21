@@ -22,54 +22,66 @@ class Winston {
 	}
 
 	error(err: any) {
-		const logger = this.createLog();
-		const date = new Date();
-		logger.add(
-			new transports.DailyRotateFile({
-				filename: `${dirPath}/errors/${
-					date.getMonth() + 1
-				}-${date.getFullYear()}/%DATE%.log`,
-				datePattern: "DD-MM-YYYY",
-				maxSize: "20m",
-				level: "error",
-			})
-		);
+		try {
+			const logger = this.createLog();
+			const date = new Date();
+			logger.add(
+				new transports.DailyRotateFile({
+					filename: `${dirPath}/errors/${
+						date.getMonth() + 1
+					}-${date.getFullYear()}/%DATE%.log`,
+					datePattern: "DD-MM-YYYY",
+					maxSize: "20m",
+					level: "error",
+				})
+			);
 
-		return logger.error(err);
+			return logger.error(err);
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	info(info: any) {
-		const logger = this.createLog();
-		const date = new Date();
-		logger.add(
-			new transports.DailyRotateFile({
-				filename: `${dirPath}/info/${
-					date.getMonth() + 1
-				}-${date.getFullYear()}/%DATE%.log`,
-				datePattern: "DD-MM-YYYY",
-				maxSize: "20m",
-				level: "info",
-			})
-		);
+		try {
+			const logger = this.createLog();
+			const date = new Date();
+			logger.add(
+				new transports.DailyRotateFile({
+					filename: `${dirPath}/info/${
+						date.getMonth() + 1
+					}-${date.getFullYear()}/%DATE%.log`,
+					datePattern: "DD-MM-YYYY",
+					maxSize: "20m",
+					level: "info",
+				})
+			);
 
-		return logger.info(info);
+			return logger.info(info);
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	debug(err: any) {
-		const logger = this.createLog();
-		const date = new Date();
-		logger.add(
-			new transports.DailyRotateFile({
-				filename: `${dirPath}/debug/${
-					date.getMonth() + 1
-				}-${date.getFullYear()}/%DATE%.log`,
-				datePattern: "DD-MM-YYYY",
-				maxSize: "20m",
-				level: "debug",
-			})
-		);
+		try {
+			const logger = this.createLog();
+			const date = new Date();
+			logger.add(
+				new transports.DailyRotateFile({
+					filename: `${dirPath}/debug/${
+						date.getMonth() + 1
+					}-${date.getFullYear()}/%DATE%.log`,
+					datePattern: "DD-MM-YYYY",
+					maxSize: "20m",
+					level: "debug",
+				})
+			);
 
-		return logger.debug(err);
+			return logger.debug(err);
+		} catch (err) {
+			console.error(err);
+		}
 	}
 }
 
